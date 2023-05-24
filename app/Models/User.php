@@ -18,9 +18,24 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'numCNI',
+        "nom",
+        "prenom",
+        "dateNaiss",
+        "lieuNaiss",
+        "telephone",
+        "signature",
+        "empreintes",
+        "visage",
+        "taille",
+        "dateEnrollement",
+        "dateEmission",
+        "dateExpiration",
+        'sexe',
+        'profession',
+        "nationalite_id",
+        "email",
+        "password",
     ];
 
     /**
@@ -42,4 +57,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function nationalite()
+    {
+        return $this->belongsTo(Nationalite::class);
+    }
+
+    public function signalements()
+    {
+        return $this->hasMany(Signalement::class);
+    }
+
+    public function parent()
+    {
+        return $this->belongsToMany(User::class, "parents", "user_id", "parent_id")->withPivot(["type"]);
+    }
 }
