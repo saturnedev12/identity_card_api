@@ -19,7 +19,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post("register", [FunctionController::class, "register"]);
-Route::get("users/{mot?}", [FunctionController::class, "user"]);
-Route::post("file/upload", [FunctionController::class, "upload"]);
-Route::get("file/", [FunctionController::class, "file"]);
+Route::middleware(['cors'])->group(function () {
+    Route::post("register", [FunctionController::class, "register"]);
+    Route::get("users/{mot?}", [FunctionController::class, "user"]);
+    Route::post("file/upload", [FunctionController::class, "upload"]);
+    Route::get("file/", [FunctionController::class, "file"]);
+});
+
